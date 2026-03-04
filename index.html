@@ -1,759 +1,405 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>METRIKA GROUP · Inteligencia que transforma negocios</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<style>
-:root {
-  --black:   #000000;
-  --bg:      #060608;
-  --bg2:     #0a0a0f;
-  --bg3:     #0f0f18;
-  --card:    #111118;
-  --border:  rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.04);
-  --cyan:    #00C8FF;
-  --cyan2:   #00A8D8;
-  --violet:  #7B61FF;
-  --mint:    #00E5A0;
-  --white:   #FFFFFF;
-  --t1:      #F5F5F7;
-  --t2:      #A1A1A6;
-  --t3:      #6E6E73;
-  --grad:    linear-gradient(135deg, #00C8FF 0%, #7B61FF 100%);
-  --grad2:   linear-gradient(135deg, #00C8FF 0%, #00E5A0 100%);
-}
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; font-size:16px; }
-body {
-  font-family:'DM Sans', -apple-system, sans-serif;
-  background:var(--bg);
-  color:var(--t1);
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-}
-::-webkit-scrollbar { width:4px; }
-::-webkit-scrollbar-track { background:var(--bg); }
-::-webkit-scrollbar-thumb { background:rgba(0,200,255,0.3); border-radius:2px; }
-::selection { background:rgba(0,200,255,0.2); color:#fff; }
-
-/* ─── NAVBAR ─────────────────────────────────────── */
-#nav {
-  position:fixed; inset:0 0 auto; z-index:999;
-  height:52px;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 24px;
-  transition:background .5s, border-color .5s;
-  border-bottom:1px solid transparent;
-}
-#nav.solid {
-  background:rgba(6,6,8,0.82);
-  backdrop-filter:blur(24px) saturate(180%);
-  -webkit-backdrop-filter:blur(24px) saturate(180%);
-  border-bottom-color:var(--border2);
-}
-.nav-logo {
-  display:flex; align-items:center; gap:9px;
-  text-decoration:none; flex-shrink:0;
-}
-/* M mark — geometric angular */
-.m-mark {
-  width:28px; height:28px; flex-shrink:0;
-}
-.nav-wordmark {
-  font-family:'Sora', sans-serif;
-  font-weight:700;
-  font-size:14px;
-  letter-spacing:3px;
-  color:var(--white);
-  text-transform:uppercase;
-}
-.nav-wordmark sup {
-  font-size:7px; letter-spacing:2px; color:var(--t3);
-  vertical-align:super; margin-left:1px;
-}
-.nav-center {
-  display:flex; gap:0; list-style:none;
-  position:absolute; left:50%; transform:translateX(-50%);
-}
-.nav-center a {
-  display:block; padding:6px 16px;
-  font-size:13px; font-weight:400; color:var(--t2);
-  text-decoration:none; letter-spacing:.2px;
-  transition:color .2s;
-  border-radius:6px;
-}
-.nav-center a:hover { color:var(--white); }
-.nav-right { display:flex; align-items:center; gap:12px; }
-.nav-btn {
-  padding:7px 18px; border-radius:980px;
-  font-size:13px; font-weight:500;
-  background:var(--cyan); color:#000;
-  border:none; cursor:pointer;
-  text-decoration:none; display:inline-block;
-  transition:opacity .2s, transform .2s;
-  letter-spacing:.2px;
-}
-.nav-btn:hover { opacity:.85; transform:scale(0.98); }
-
-/* ─── HERO ────────────────────────────────────────── */
-#hero {
-  min-height:100svh;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  text-align:center;
-  padding:120px 24px 100px;
-  position:relative; overflow:hidden;
-}
-.hero-bg-glow {
-  position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(ellipse 900px 500px at 50% 40%, rgba(0,200,255,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 600px 400px at 70% 70%, rgba(123,97,255,0.06) 0%, transparent 70%);
-}
-.hero-noise {
-  position:absolute; inset:0; z-index:0; pointer-events:none;
-  opacity:.018;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size:200px;
-}
-#hero-canvas {
-  position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.5;
-}
-.hero-inner { position:relative; z-index:2; max-width:860px; margin:0 auto; }
-
-.eyebrow {
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:'JetBrains Mono', monospace;
-  font-size:11px; letter-spacing:2.5px; text-transform:uppercase;
-  color:var(--cyan); margin-bottom:28px;
-  opacity:0; animation:up .9s .1s forwards;
-}
-.eyebrow-dot { width:5px; height:5px; border-radius:50%; background:var(--cyan); animation:blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-.hero-h1 {
-  font-family:'Sora', sans-serif;
-  font-size:clamp(44px, 7.5vw, 88px);
-  font-weight:800; line-height:1.04;
-  letter-spacing:-2px;
-  margin-bottom:28px;
-  opacity:0; animation:up .9s .25s forwards;
-}
-.hero-h1 em {
-  font-style:normal;
-  background:var(--grad);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  background-clip:text;
-}
-.hero-p {
-  font-size:clamp(16px, 2vw, 19px);
-  font-weight:300; color:var(--t2); line-height:1.75;
-  max-width:540px; margin:0 auto 48px;
-  opacity:0; animation:up .9s .4s forwards;
-}
-.hero-actions {
-  display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
-  opacity:0; animation:up .9s .55s forwards;
-}
-.btn-a {
-  padding:14px 28px; border-radius:980px;
-  font-size:15px; font-weight:500; letter-spacing:.2px;
-  background:var(--white); color:#000;
-  text-decoration:none; display:inline-block;
-  transition:all .25s;
-}
-.btn-a:hover { background:#e0e0e0; transform:scale(.98); }
-.btn-b {
-  padding:14px 28px; border-radius:980px;
-  font-size:15px; font-weight:500; letter-spacing:.2px;
-  background:transparent; color:var(--cyan);
-  border:1px solid rgba(0,200,255,.35);
-  text-decoration:none; display:inline-block;
-  transition:all .25s;
-}
-.btn-b:hover { background:rgba(0,200,255,.07); border-color:var(--cyan); }
-
-.hero-scroll {
-  position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
-  z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px;
-  opacity:0; animation:fadeIn 1s 1.2s forwards;
-}
-.hero-scroll span {
-  font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--t3);
-  font-family:'JetBrains Mono',monospace;
-}
-.scroll-line {
-  width:1px; height:40px;
-  background:linear-gradient(to bottom, var(--cyan), transparent);
-  animation:scrollPulse 1.8s ease-in-out infinite;
-}
-@keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(.7)} }
-
-/* ticker */
-.ticker-wrap {
-  position:relative; z-index:2;
-  margin-top:72px; overflow:hidden;
-  mask-image:linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-  opacity:0; animation:fadeIn .9s .8s forwards;
-}
-.ticker-track {
-  display:flex; gap:48px; width:max-content;
-  animation:scroll 28s linear infinite;
-}
-.ticker-track span { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--t3); white-space:nowrap; }
-.ticker-track span.dot { color:rgba(0,200,255,.3); }
-@keyframes scroll { to { transform:translateX(-50%); } }
-
-/* ─── STATS ───────────────────────────────────────── */
-#stats {
-  border-top:1px solid var(--border2);
-  border-bottom:1px solid var(--border2);
-  padding:64px 24px;
-}
-.stats-inner {
-  max-width:1000px; margin:0 auto;
-  display:grid; grid-template-columns:repeat(4,1fr);
-}
-.stat {
-  text-align:center; padding:24px;
-  border-right:1px solid var(--border2);
-}
-.stat:last-child { border-right:none; }
-.stat-n {
-  font-family:'Sora',sans-serif;
-  font-size:clamp(40px,5vw,60px); font-weight:800;
-  line-height:1; letter-spacing:-2px;
-  color:var(--white); margin-bottom:8px;
-}
-.stat-n span { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.stat-l { font-size:13px; color:var(--t3); font-weight:400; letter-spacing:.3px; }
-
-/* ─── SECTIONS ────────────────────────────────────── */
-.section { padding:120px 24px; }
-.section-inner { max-width:1080px; margin:0 auto; }
-.label {
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px; letter-spacing:2.5px; text-transform:uppercase;
-  color:var(--cyan); display:block; margin-bottom:20px;
-}
-.h2 {
-  font-family:'Sora',sans-serif;
-  font-size:clamp(32px,4.5vw,56px);
-  font-weight:700; line-height:1.1; letter-spacing:-1.5px;
-  color:var(--white); margin-bottom:20px;
-}
-.h2 em { font-style:normal; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.subtext { font-size:17px; font-weight:300; color:var(--t2); line-height:1.75; max-width:520px; }
-
-/* ─── SERVICES ────────────────────────────────────── */
-#services { background:var(--bg2); }
-.services-head { margin-bottom:72px; }
-.services-grid {
-  display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
-  background:var(--border2);
-  border:1px solid var(--border2); border-radius:24px;
-  overflow:hidden;
-}
-.srv {
-  background:var(--bg); padding:52px 48px;
-  display:flex; flex-direction:column; gap:20px;
-  transition:background .3s;
-  position:relative; overflow:hidden;
-}
-.srv::after {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(circle at 0% 100%, rgba(0,200,255,.04) 0%, transparent 60%);
-  opacity:0; transition:opacity .4s;
-}
-.srv:hover { background:var(--bg3); }
-.srv:hover::after { opacity:1; }
-.srv-num {
-  font-family:'JetBrains Mono',monospace;
-  font-size:11px; color:var(--t3); letter-spacing:2px;
-}
-.srv-icon { font-size:32px; }
-.srv-title {
-  font-family:'Sora',sans-serif;
-  font-size:22px; font-weight:700; color:var(--white);
-  letter-spacing:-.5px;
-}
-.srv-desc { font-size:15px; color:var(--t2); line-height:1.7; font-weight:300; }
-.srv-link {
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:13px; color:var(--cyan); text-decoration:none;
-  font-weight:500; margin-top:8px; transition:gap .2s;
-}
-.srv-link:hover { gap:10px; }
-
-/* ─── PROCESS ─────────────────────────────────────── */
-#process { background:var(--bg); }
-.process-grid {
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:1px; background:var(--border2);
-  border:1px solid var(--border2); border-radius:24px; overflow:hidden;
-  margin-top:80px;
-}
-.step {
-  background:var(--bg2); padding:52px 40px;
-  display:flex; flex-direction:column; gap:16px;
-  transition:background .3s;
-}
-.step:hover { background:var(--bg3); }
-.step-num {
-  font-family:'Sora',sans-serif; font-size:48px; font-weight:800;
-  letter-spacing:-2px; line-height:1;
-  background:var(--grad); -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent; background-clip:text;
-  opacity:.25;
-}
-.step-icon { font-size:28px; }
-.step-title { font-family:'Sora',sans-serif; font-size:19px; font-weight:700; color:var(--white); }
-.step-desc { font-size:14px; color:var(--t2); line-height:1.7; font-weight:300; }
-
-/* ─── COURSES ─────────────────────────────────────── */
-#courses { background:var(--bg2); }
-.courses-grid {
-  display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:72px;
-}
-.course {
-  background:var(--bg); border:1px solid var(--border);
-  border-radius:20px; padding:40px 36px;
-  display:flex; flex-direction:column; gap:16px;
-  transition:all .3s; position:relative; overflow:hidden;
-}
-.course::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:1px;
-  background:var(--grad); transform:scaleX(0); transform-origin:left;
-  transition:transform .4s;
-}
-.course:hover { border-color:rgba(0,200,255,.2); transform:translateY(-4px); }
-.course:hover::before { transform:scaleX(1); }
-.c-popular {
-  position:absolute; top:20px; right:20px;
-  background:var(--grad); padding:3px 12px; border-radius:980px;
-  font-size:10px; font-weight:700; color:#000; letter-spacing:.5px;
-}
-.c-level {
-  display:inline-block; padding:3px 12px; border-radius:980px;
-  font-size:11px; font-weight:500; letter-spacing:.5px;
-  border:1px solid; width:fit-content;
-}
-.l1 { color:var(--mint);   border-color:rgba(0,229,160,.2);  background:rgba(0,229,160,.06); }
-.l2 { color:var(--cyan);   border-color:rgba(0,200,255,.2);  background:rgba(0,200,255,.06); }
-.l3 { color:var(--violet); border-color:rgba(123,97,255,.2); background:rgba(123,97,255,.06); }
-.c-icon { font-size:32px; }
-.c-title { font-family:'Sora',sans-serif; font-size:18px; font-weight:700; color:var(--white); letter-spacing:-.3px; }
-.c-desc { font-size:14px; color:var(--t2); line-height:1.65; font-weight:300; flex:1; }
-.c-meta { display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid var(--border2); }
-.c-dur { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--t3); }
-.c-price { font-size:12px; color:var(--mint); font-weight:500; }
-.c-btn {
-  display:block; width:100%; padding:11px; border-radius:10px;
-  border:1px solid var(--border); background:transparent;
-  font-size:13px; font-weight:500; color:var(--t1);
-  text-align:center; text-decoration:none; cursor:pointer;
-  font-family:'DM Sans',sans-serif; letter-spacing:.2px;
-  transition:all .25s;
-}
-.c-btn:hover { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.2); color:#fff; }
-
-/* ─── CEO ─────────────────────────────────────────── */
-#ceo { background:var(--bg); }
-.ceo-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:96px; align-items:center;
-}
-.ceo-visual {
-  aspect-ratio:1; max-width:460px;
-  border-radius:32px; overflow:hidden;
-  background:var(--bg3);
-  border:1px solid var(--border);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:16px;
-  position:relative;
-}
-.ceo-visual::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(circle at 50% 0%, rgba(0,200,255,.08) 0%, transparent 70%);
-}
-.ceo-avatar-circle {
-  width:120px; height:120px; border-radius:50%;
-  background:linear-gradient(135deg, rgba(0,200,255,.15), rgba(123,97,255,.15));
-  border:1px solid rgba(0,200,255,.2);
-  display:flex; align-items:center; justify-content:center;
-  font-size:52px;
-}
-.ceo-badge {
-  display:flex; flex-direction:column; align-items:center; gap:4px;
-}
-.ceo-badge-name { font-family:'Sora',sans-serif; font-size:20px; font-weight:700; color:var(--white); }
-.ceo-badge-role { font-size:12px; color:var(--cyan); font-family:'JetBrains Mono',monospace; letter-spacing:1px; }
-.ceo-info { }
-.ceo-name { font-family:'Sora',sans-serif; font-size:clamp(32px,4vw,48px); font-weight:700; letter-spacing:-1.5px; color:var(--white); margin-bottom:8px; }
-.ceo-role-text { font-size:15px; color:var(--cyan); font-weight:500; margin-bottom:28px; letter-spacing:.3px; }
-.ceo-bio { font-size:16px; color:var(--t2); line-height:1.8; font-weight:300; margin-bottom:36px; }
-.chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:40px; }
-.chip {
-  padding:5px 14px; border-radius:980px;
-  font-size:12px; font-weight:500; letter-spacing:.3px;
-  background:rgba(255,255,255,.05); color:var(--t1);
-  border:1px solid var(--border);
-}
-.btn-contact {
-  display:inline-flex; align-items:center; gap:8px;
-  padding:13px 24px; border-radius:980px;
-  background:rgba(255,255,255,.07); border:1px solid var(--border);
-  color:var(--white); font-size:14px; font-weight:500;
-  text-decoration:none; transition:all .25s; letter-spacing:.2px;
-}
-.btn-contact:hover { background:rgba(255,255,255,.12); }
-
-/* ─── TESTIMONIALS ────────────────────────────────── */
-#testi { background:var(--bg2); }
-.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:72px; }
-.tcard {
-  background:var(--bg); border:1px solid var(--border);
-  border-radius:20px; padding:36px 32px;
-  display:flex; flex-direction:column; gap:20px;
-  transition:all .3s;
-}
-.tcard:hover { border-color:rgba(0,200,255,.15); transform:translateY(-3px); }
-.tcard-stars { display:flex; gap:3px; }
-.tcard-stars span { color:#F5A623; font-size:14px; }
-.tcard-quote { font-size:15px; color:var(--t2); line-height:1.8; font-weight:300; font-style:italic; flex:1; }
-.tcard-author { display:flex; align-items:center; gap:14px; padding-top:16px; border-top:1px solid var(--border2); }
-.tcard-av {
-  width:40px; height:40px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:14px; font-weight:700; color:#000; flex-shrink:0;
-}
-.tcard-name { font-size:13px; font-weight:600; color:var(--white); }
-.tcard-co   { font-size:12px; color:var(--t3); margin-top:2px; }
-
-/* ─── FINAL CTA ───────────────────────────────────── */
-#cta {
-  padding:160px 24px; text-align:center;
-  background:var(--bg); position:relative; overflow:hidden;
-}
-.cta-glow {
-  position:absolute; inset:0; pointer-events:none;
-  background:
-    radial-gradient(ellipse 800px 400px at 50% 50%, rgba(0,200,255,.06) 0%, transparent 70%),
-    radial-gradient(ellipse 400px 300px at 30% 80%, rgba(123,97,255,.05) 0%, transparent 70%);
-}
-.cta-inner { position:relative; z-index:1; max-width:700px; margin:0 auto; }
-.cta-h2 {
-  font-family:'Sora',sans-serif;
-  font-size:clamp(36px,5.5vw,64px); font-weight:700;
-  letter-spacing:-2px; line-height:1.08; color:var(--white);
-  margin-bottom:24px;
-}
-.cta-h2 em { font-style:normal; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.cta-p { font-size:17px; color:var(--t2); font-weight:300; line-height:1.75; margin-bottom:48px; }
-.cta-note { font-size:12px; color:var(--t3); margin-top:16px; font-family:'JetBrains Mono',monospace; letter-spacing:.5px; }
-
-/* ─── FOOTER ──────────────────────────────────────── */
-footer {
-  background:var(--bg2);
-  border-top:1px solid var(--border2);
-  padding:72px 24px 48px;
-}
-.footer-inner { max-width:1080px; margin:0 auto; }
-.footer-top {
-  display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr;
-  gap:48px; margin-bottom:64px;
-}
-.ft-brand { }
-.ft-logo { display:flex; align-items:center; gap:9px; margin-bottom:20px; }
-.ft-logo-text { font-family:'Sora',sans-serif; font-weight:700; font-size:13px; letter-spacing:3px; color:var(--white); }
-.ft-tagline { font-size:14px; color:var(--t3); line-height:1.7; max-width:240px; font-weight:300; margin-bottom:16px; }
-.ft-location { font-size:12px; color:var(--t3); font-family:'JetBrains Mono',monospace; }
-.ft-col h5 { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--t2); margin-bottom:20px; }
-.ft-col ul { list-style:none; display:flex; flex-direction:column; gap:12px; }
-.ft-col ul a { font-size:14px; color:var(--t3); text-decoration:none; font-weight:300; transition:color .2s; }
-.ft-col ul a:hover { color:var(--white); }
-.ft-email { display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--cyan); text-decoration:none; margin-bottom:12px; transition:opacity .2s; }
-.ft-email:hover { opacity:.75; }
-.ft-person { font-size:13px; color:var(--t3); line-height:1.7; font-weight:300; }
-.footer-bottom {
-  display:flex; justify-content:space-between; align-items:center;
-  padding-top:32px; border-top:1px solid var(--border2);
-}
-.ft-copy { font-size:12px; color:var(--t3); }
-.ft-copy strong { color:var(--t2); font-weight:500; }
-.ft-mono { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--t3); letter-spacing:1px; }
-
-/* ─── REVEAL ANIMATIONS ───────────────────────────── */
-@keyframes up     { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.r { opacity:0; transform:translateY(32px); transition:opacity .8s ease, transform .8s ease; }
-.r.in { opacity:1; transform:translateY(0); }
-
-/* ─── RESPONSIVE ──────────────────────────────────── */
-@media(max-width:960px) {
-  .nav-center { display:none; }
-  .stats-inner { grid-template-columns:repeat(2,1fr); }
-  .stat { border-right:none; border-bottom:1px solid var(--border2); }
-  .services-grid, .process-grid, .courses-grid, .testi-grid { grid-template-columns:1fr; }
-  .ceo-grid { grid-template-columns:1fr; }
-  .ceo-visual { max-width:100%; }
-  .footer-top { grid-template-columns:1fr 1fr; }
-}
-@media(max-width:560px) {
-  .footer-top { grid-template-columns:1fr; }
-  .footer-bottom { flex-direction:column; gap:12px; text-align:center; }
-  .hero-actions { flex-direction:column; align-items:center; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>METRIKA GROUP — Inteligencia que transforma negocios</title>
+  <meta name="description" content="Consultoría en IA, automatización de procesos y formación en datos para empresas que quieren liderar el futuro.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-dark: #0a0d12;
+      --bg-light: #f5f5f7;
+      --fg-white: #fafafa;
+      --fg-dark: #121212;
+      --primary: #1d8cf8;
+      --secondary: #8b6cf6;
+      --muted: #6b7a8d;
+      --card-bg: #12161e;
+      --card-border: rgba(255,255,255,0.06);
+      --gradient: linear-gradient(135deg, #1d8cf8, #8b6cf6);
+      --radius: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg-dark); color: var(--fg-white); -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+    ::selection { background: rgba(29,140,248,0.25); color: white; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    .text-gradient { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .btn-primary { display: inline-block; background: var(--gradient); color: #fff; font-weight: 600; border-radius: 50px; padding: 0.75rem 2rem; font-size: 0.95rem; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 2px 16px rgba(29,140,248,0.2); }
+    .btn-primary:hover { transform: scale(1.03); box-shadow: 0 4px 24px rgba(29,140,248,0.3); }
+    .btn-outline { display: inline-block; border: 1px solid rgba(255,255,255,0.3); color: #fff; font-weight: 600; border-radius: 50px; padding: 0.75rem 2rem; font-size: 0.95rem; transition: all 0.3s; }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 2rem; transition: transform 0.3s, box-shadow 0.3s; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 48px rgba(29,140,248,0.08); }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(10,13,18,0.85); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border-bottom: 1px solid var(--card-border); }
+    nav .inner { display: flex; align-items: center; justify-content: space-between; height: 5rem; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+    nav .logo { display: flex; align-items: center; gap: 0.5rem; }
+    nav .logo-mark { width: 2rem; height: 2rem; background: var(--gradient); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-family: 'Sora'; font-weight: 700; font-size: 0.85rem; color: var(--fg-dark); }
+    nav .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    nav .logo-text span:first-child { font-family: 'Sora'; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; }
+    nav .logo-text span:last-child { font-family: 'Sora'; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--muted); }
+    nav .links { display: flex; gap: 2rem; }
+    nav .links a { font-size: 0.875rem; color: var(--muted); transition: color 0.2s; }
+    nav .links a:hover { color: var(--fg-white); }
+    @media (max-width: 768px) { nav .links, nav .btn-primary { display: none; } }
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 7rem 1.5rem 4rem; position: relative; overflow: hidden; }
+    .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.5; }
+    .hero .content { position: relative; z-index: 10; }
+    .hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); font-weight: 700; line-height: 1.05; margin-bottom: 1.5rem; }
+    .hero p { max-width: 640px; margin: 0 auto 2.5rem; font-size: 1.1rem; color: var(--muted); line-height: 1.6; }
+    .hero .buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+    .marquee-wrap { overflow: hidden; max-width: 48rem; margin: 0 auto; }
+    .marquee { display: flex; white-space: nowrap; animation: marquee 30s linear infinite; }
+    .marquee span { margin: 0 1rem; font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--muted); opacity: 0.6; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    /* TRUST */
+    .trust { padding: 4rem 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
+    .trust .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+    .trust .stat-num {
+      font-family: 'Sora'; font-size: 2.5rem; font-weight: 700;
+      background: linear-gradient(135deg, #E0F7FF 0%, #1d8cf8 35%, #8b6cf6 70%, #00E5A0 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 16px rgba(29,140,248,0.4));
+    }
+    .trust .stat-label { margin-top: 0.5rem; font-size: 0.875rem; color: var(--muted); }
+    @media (max-width: 768px) { .trust .grid { grid-template-columns: repeat(2, 1fr); } }
+    /* SERVICES */
+    .services { padding: 5rem 0; background: var(--bg-light); color: var(--fg-dark); }
+    .services .section-label { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; }
+    .services h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; margin-top: 0.75rem; margin-bottom: 3rem; }
+    .services .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+    .services .card { color: var(--fg-white); }
+    .services .card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .services .card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .services .card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .services .card .link { font-size: 0.875rem; color: var(--primary); font-weight: 500; cursor: pointer; }
+    @media (max-width: 768px) { .services .grid { grid-template-columns: 1fr; } }
+    /* PROCESS */
+    .process { padding: 5rem 0; }
+    .process .section-label { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; }
+    .process h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; margin-top: 0.75rem; margin-bottom: 3rem; }
+    .process .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 900px; margin: 0 auto; text-align: center; }
+    .process .step-icon { width: 3.5rem; height: 3.5rem; border-radius: 50%; border: 1px solid rgba(29,140,248,0.3); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 1.25rem; }
+    .process .step-num { font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--primary); margin-bottom: 0.5rem; }
+    .process .step h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .process .step p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; max-width: 280px; margin: 0 auto; }
+    @media (max-width: 768px) { .process .steps { grid-template-columns: 1fr; } }
+    /* TRAINING */
+    .training { padding: 5rem 0; background: var(--bg-light); color: var(--fg-dark); }
+    .training .section-label { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; }
+    .training h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; margin-top: 0.75rem; }
+    .training .subtitle { color: var(--muted); margin-top: 1rem; margin-bottom: 3rem; }
+    .training .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+    .training .card { color: var(--fg-white); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+    .training .badge { position: absolute; top: 1rem; right: 1rem; background: var(--gradient); color: var(--fg-dark); font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 50px; }
+    .training .card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .training .card p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; flex: 1; margin-bottom: 1.5rem; }
+    .training .meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; display: flex; gap: 1rem; }
+    .training .price { font-family: 'JetBrains Mono'; font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; }
+    @media (max-width: 768px) { .training .grid { grid-template-columns: 1fr; } }
+    /* ABOUT */
+    .about { padding: 5rem 0; }
+    .about .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 900px; margin: 0 auto; align-items: center; }
+    .about .photo { aspect-ratio: 3/4; border-radius: var(--radius); background: linear-gradient(135deg, var(--card-bg), var(--bg-dark)); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; position: relative; }
+    .about .avatar { width: 5rem; height: 5rem; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-family: 'Sora'; font-weight: 700; font-size: 1.5rem; color: var(--fg-dark); margin-bottom: 0.75rem; }
+    .about .section-label { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; }
+    .about h2 { font-size: 2rem; font-weight: 700; margin-top: 0.75rem; }
+    .about .role { color: var(--primary); font-weight: 500; margin-bottom: 1.5rem; }
+    .about .bio { color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+    .about .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .about .badges span { padding: 0.375rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 500; border: 1px solid rgba(29,140,248,0.3); color: var(--primary); }
+    .about .cta-link { color: var(--primary); font-size: 0.875rem; font-weight: 500; }
+    @media (max-width: 768px) { .about .grid { grid-template-columns: 1fr; } .about .photo { max-width: 320px; margin: 0 auto; } }
+    /* TESTIMONIALS */
+    .testimonials { padding: 5rem 0; background: var(--bg-light); color: var(--fg-dark); }
+    .testimonials .section-label { font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; }
+    .testimonials h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; margin-top: 0.75rem; margin-bottom: 3rem; }
+    .testimonials .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+    .testimonials .card { color: var(--fg-white); display: flex; flex-direction: column; }
+    .testimonials .quote-icon { color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; }
+    .testimonials .card .text { font-size: 0.875rem; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 1.5rem; }
+    .testimonials .stars { color: var(--primary); margin-bottom: 1rem; letter-spacing: 2px; }
+    .testimonials .author { display: flex; align-items: center; gap: 0.75rem; }
+    .testimonials .author-avatar { width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: var(--fg-dark); }
+    .testimonials .author-name { font-size: 0.875rem; font-weight: 500; color: var(--fg-white); }
+    .testimonials .author-company { font-size: 0.75rem; color: var(--muted); }
+    @media (max-width: 768px) { .testimonials .grid { grid-template-columns: 1fr; } }
+    /* CTA FINAL */
+    .cta-final { padding: 6rem 1.5rem; text-align: center; position: relative; overflow: hidden; background: var(--gradient); }
+    .cta-final h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; color: var(--fg-dark); margin-bottom: 1.5rem; }
+    .cta-final p { color: rgba(18,18,18,0.7); max-width: 32rem; margin: 0 auto 2.5rem; font-size: 1.1rem; }
+    .cta-final .btn-dark { display: inline-block; background: var(--fg-dark); color: var(--fg-white); font-weight: 600; border-radius: 50px; padding: 1rem 2.5rem; font-size: 1rem; transition: transform 0.3s; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .cta-final .btn-dark:hover { transform: scale(1.05); }
+    .cta-final .small { margin-top: 1.5rem; font-size: 0.85rem; color: rgba(18,18,18,0.5); }
+    /* FOOTER */
+    footer { background: var(--bg-dark); }
+    footer .top-line { height: 1px; background: var(--gradient); }
+    footer .inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5rem; padding: 4rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+    footer .brand p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; margin-top: 1rem; }
+    footer h4 { font-family: 'Sora'; font-weight: 600; font-size: 0.875rem; margin-bottom: 1rem; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 0.5rem; }
+    footer ul a { font-size: 0.875rem; color: var(--muted); transition: color 0.2s; }
+    footer ul a:hover { color: var(--fg-white); }
+    footer .contact-email { font-size: 0.875rem; color: var(--primary); }
+    footer .bottom { border-top: 1px solid var(--card-border); padding: 1.5rem; text-align: center; font-size: 0.75rem; color: var(--muted); }
+    @media (max-width: 768px) { footer .inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { footer .inner { grid-template-columns: 1fr; } }
+    /* WHATSAPP FLOAT */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.5);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(37,211,102,0.7); }
+  </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav id="nav">
-  <a href="#hero" class="nav-logo">
-    <!-- M geometric mark -->
-    <svg class="m-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="mg" x1="0" y1="0" x2="28" y2="28">
-          <stop stop-color="#00C8FF"/>
-          <stop offset="1" stop-color="#7B61FF"/>
-        </linearGradient>
-      </defs>
-      <!-- M constructed from sharp angular strokes -->
-      <polyline points="3,22 3,6 14,17 25,6 25,22" stroke="url(#mg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </svg>
-    <span class="nav-wordmark">METRIKA<sup>GROUP</sup></span>
-  </a>
-  <ul class="nav-center">
-    <li><a href="#services">Servicios</a></li>
-    <li><a href="#process">Proceso</a></li>
-    <li><a href="#courses">Formación</a></li>
-    <li><a href="#ceo">Nosotros</a></li>
-    <li><a href="#cta">Contacto</a></li>
-  </ul>
-  <div class="nav-right">
-    <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="nav-btn">Agendar consulta</a>
+<nav>
+  <div class="inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">M</div>
+      <div class="logo-text">
+        <span>METRIKA</span>
+        <span>GROUP</span>
+      </div>
+    </a>
+    <div class="links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Soluciones</a>
+      <a href="#capacitaciones">Capacitaciones</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="btn-primary" style="font-size:0.85rem;padding:0.6rem 1.5rem;">Agendar consulta</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-bg-glow"></div>
-  <div class="hero-noise"></div>
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-inner">
-    <div class="eyebrow"><span class="eyebrow-dot"></span>Consultoría · IA · Automatización · Datos</div>
-    <h1 class="hero-h1">Automatiza.<br><em>Transforma.</em><br>Lidera.</h1>
-    <p class="hero-p">Consultoría estratégica en inteligencia artificial, automatización de procesos y análisis de datos para empresas que quieren liderar el futuro.</p>
-    <div class="hero-actions">
-      <a href="#services" class="btn-a">Explorar servicios</a>
-      <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="btn-b">Hablar con Fernando →</a>
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="content">
+    <h1>
+      <span style="display:block;">Automatiza. Analiza.</span>
+      <span class="text-gradient" style="display:block;">Transforma tu negocio.</span>
+    </h1>
+    <p>Consultoría en IA, automatización de procesos y formación en datos para empresas que quieren liderar el futuro.</p>
+    <div class="buttons">
+      <a href="#servicios" class="btn-primary">Explorar servicios</a>
+      <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="btn-outline">Hablar con Fernando</a>
     </div>
-  </div>
-  <div class="ticker-wrap">
-    <div class="ticker-track">
-      <span>N8n</span><span class="dot">·</span><span>Make</span><span class="dot">·</span>
-      <span>Power BI</span><span class="dot">·</span><span>Python</span><span class="dot">·</span>
-      <span>OpenAI</span><span class="dot">·</span><span>Claude AI</span><span class="dot">·</span>
-      <span>LangChain</span><span class="dot">·</span><span>Excel</span><span class="dot">·</span>
-      <span>Agentes IA</span><span class="dot">·</span><span>Análisis de Datos</span><span class="dot">·</span>
-      <span>Automatización</span><span class="dot">·</span><span>IA Generativa</span><span class="dot">·</span>
-      <!-- duplicate -->
-      <span>N8n</span><span class="dot">·</span><span>Make</span><span class="dot">·</span>
-      <span>Power BI</span><span class="dot">·</span><span>Python</span><span class="dot">·</span>
-      <span>OpenAI</span><span class="dot">·</span><span>Claude AI</span><span class="dot">·</span>
-      <span>LangChain</span><span class="dot">·</span><span>Excel</span><span class="dot">·</span>
-      <span>Agentes IA</span><span class="dot">·</span><span>Análisis de Datos</span><span class="dot">·</span>
-      <span>Automatización</span><span class="dot">·</span><span>IA Generativa</span><span class="dot">·</span>
+    <div class="marquee-wrap">
+      <div class="marquee">
+        <span>N8n</span><span>Make</span><span>Power BI</span><span>Python</span><span>OpenAI</span><span>Claude</span><span>LangChain</span><span>Excel</span><span>Automatización</span><span>IA Generativa</span>
+        <span>N8n</span><span>Make</span><span>Power BI</span><span>Python</span><span>OpenAI</span><span>Claude</span><span>LangChain</span><span>Excel</span><span>Automatización</span><span>IA Generativa</span>
+      </div>
     </div>
-  </div>
-  <div class="hero-scroll">
-    <span>scroll</span>
-    <div class="scroll-line"></div>
   </div>
 </section>
 
-<!-- STATS -->
-<section id="stats">
-  <div class="stats-inner">
-    <div class="stat r"><div class="stat-n"><span data-n="50">0</span>+</div><div class="stat-l">Empresas asesoradas</div></div>
-    <div class="stat r" style="transition-delay:.1s"><div class="stat-n"><span data-n="120">0</span>+</div><div class="stat-l">Automatizaciones implementadas</div></div>
-    <div class="stat r" style="transition-delay:.2s"><div class="stat-n"><span data-n="300">0</span>+</div><div class="stat-l">Profesionales capacitados</div></div>
-    <div class="stat r" style="transition-delay:.3s"><div class="stat-n"><span data-n="98">0</span>%</div><div class="stat-l">Satisfacción de clientes</div></div>
+<!-- TRUST BAR -->
+<section class="trust" style="background:var(--bg-dark);">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <div class="stat-num">+10</div>
+        <div class="stat-label">Empresas asesoradas</div>
+      </div>
+      <div>
+        <div class="stat-num">+20</div>
+        <div class="stat-label">Automatizaciones implementadas</div>
+      </div>
+      <div>
+        <div class="stat-num">+50</div>
+        <div class="stat-label">Profesionales capacitados</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Satisfacción de clientes</div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- SERVICES -->
-<section id="services" class="section" style="background:var(--bg2)">
-  <div class="section-inner">
-    <div class="services-head r">
-      <span class="label">Servicios</span>
-      <h2 class="h2">Soluciones diseñadas<br>para el <em>futuro</em> de tu empresa.</h2>
-    </div>
-    <div class="services-grid">
-      <div class="srv r">
-        <span class="srv-num">01</span>
-        <div class="srv-icon">🤖</div>
-        <h3 class="srv-title">Agentes & Asistentes de IA</h3>
-        <p class="srv-desc">Desarrollamos agentes inteligentes personalizados que automatizan decisiones, conversaciones y procesos complejos con tecnología de punta.</p>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="srv-link">Más información →</a>
+<section id="servicios" class="services">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">Lo que hacemos</span>
+    <h2>Soluciones diseñadas para el<br>futuro de tu empresa</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3>Agentes &amp; Asistentes de IA</h3>
+        <p>Desarrollamos agentes inteligentes personalizados que automatizan decisiones y conversaciones en tu empresa.</p>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20el%20servicio%20de%20Agentes%20de%20IA" target="_blank" class="link">Ver más →</a>
       </div>
-      <div class="srv r" style="transition-delay:.1s">
-        <span class="srv-num">02</span>
-        <div class="srv-icon">⚡</div>
-        <h3 class="srv-title">Automatización con N8n & Make</h3>
-        <p class="srv-desc">Conectamos tus herramientas y eliminamos tareas repetitivas con flujos de trabajo inteligentes que operan 24/7 sin intervención humana.</p>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="srv-link">Más información →</a>
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>Automatización con N8n &amp; Make</h3>
+        <p>Conectamos tus herramientas y eliminamos tareas repetitivas con flujos de trabajo inteligentes.</p>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20el%20servicio%20de%20Automatizaci%C3%B3n" target="_blank" class="link">Ver más →</a>
       </div>
-      <div class="srv r" style="transition-delay:.15s">
-        <span class="srv-num">03</span>
-        <div class="srv-icon">🧠</div>
-        <h3 class="srv-title">Consultoría Estratégica en IA</h3>
-        <p class="srv-desc">Analizamos tu negocio e implementamos soluciones de inteligencia artificial con impacto medible, alineadas a tus objetivos estratégicos.</p>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="srv-link">Más información →</a>
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Consultoría Estratégica en IA</h3>
+        <p>Analizamos tu negocio e implementamos soluciones de inteligencia artificial con impacto medible.</p>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20la%20Consultor%C3%ADa%20en%20IA" target="_blank" class="link">Ver más →</a>
       </div>
-      <div class="srv r" style="transition-delay:.2s">
-        <span class="srv-num">04</span>
-        <div class="srv-icon">📊</div>
-        <h3 class="srv-title">Análisis & Visualización de Datos</h3>
-        <p class="srv-desc">Transformamos tus datos en dashboards accionables con Power BI y Excel que revelan insights para decisiones estratégicas más inteligentes.</p>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="srv-link">Más información →</a>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Análisis &amp; Visualización de Datos</h3>
+        <p>Transformamos tus datos en dashboards accionables con Power BI, Excel y herramientas avanzadas.</p>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20el%20servicio%20de%20An%C3%A1lisis%20de%20Datos" target="_blank" class="link">Ver más →</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PROCESS -->
-<section id="process" class="section">
-  <div class="section-inner">
-    <div class="r">
-      <span class="label">Cómo trabajamos</span>
-      <h2 class="h2">Simple, preciso,<br><em>efectivo.</em></h2>
-      <p class="subtext">Desde el diagnóstico hasta la implementación, acompañamos cada paso hacia la transformación digital de tu empresa.</p>
-    </div>
-    <div class="process-grid">
-      <div class="step r">
-        <div class="step-num">01</div>
+<section id="proceso" class="process" style="background:var(--bg-dark);">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">Metodología</span>
+    <h2>Cómo trabajamos</h2>
+    <div class="steps">
+      <div class="step">
         <div class="step-icon">🔍</div>
-        <h3 class="step-title">Diagnóstico</h3>
-        <p class="step-desc">Entendemos tu negocio, mapeamos procesos e identificamos las oportunidades de mayor impacto para automatización e IA.</p>
+        <div class="step-num">01</div>
+        <h3>Diagnóstico</h3>
+        <p>Entendemos tu negocio, procesos y objetivos para identificar oportunidades.</p>
       </div>
-      <div class="step r" style="transition-delay:.15s">
+      <div class="step">
+        <div class="step-icon">✏️</div>
         <div class="step-num">02</div>
-        <div class="step-icon">🎨</div>
-        <h3 class="step-title">Diseño</h3>
-        <p class="step-desc">Construimos la solución a medida, seleccionando las mejores herramientas adaptadas a tu realidad y presupuesto.</p>
+        <h3>Diseño</h3>
+        <p>Construimos la solución a medida con las mejores herramientas del mercado.</p>
       </div>
-      <div class="step r" style="transition-delay:.3s">
-        <div class="step-num">03</div>
+      <div class="step">
         <div class="step-icon">🚀</div>
-        <h3 class="step-title">Implementación</h3>
-        <p class="step-desc">Desplegamos, capacitamos a tu equipo y acompañamos el cambio para garantizar adopción real y resultados medibles.</p>
+        <div class="step-num">03</div>
+        <h3>Implementación</h3>
+        <p>Desplegamos, capacitamos y acompañamos el cambio en tu organización.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- COURSES -->
-<section id="courses" class="section" style="background:var(--bg2)">
-  <div class="section-inner">
-    <div class="r">
-      <span class="label">Formación profesional</span>
-      <h2 class="h2">Aprende con<br>los <em>mejores.</em></h2>
-      <p class="subtext">Programas prácticos diseñados para profesionales y equipos que quieren ser más competitivos con IA y datos.</p>
-    </div>
-    <div class="courses-grid">
-      <div class="course r">
-        <div class="c-popular">⭐ Más popular</div>
-        <div class="c-icon">🤖</div>
-        <div class="c-level l1">Básico → Intermedio</div>
-        <h3 class="c-title">IA para Negocios</h3>
-        <p class="c-desc">Fundamentos de IA generativa, técnicas de prompting avanzado y automatización básica para potenciar tu empresa.</p>
-        <div class="c-meta"><span class="c-dur">⏱ 20h</span><span class="c-price">Consultar precio</span></div>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="c-btn">Inscribirse</a>
+<!-- TRAINING -->
+<section id="capacitaciones" class="training">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">Formación</span>
+    <h2>Aprende con los mejores</h2>
+    <p class="subtitle">Programas de formación práctica en IA y datos</p>
+    <div class="grid">
+      <div class="card">
+        <span class="badge">Más popular</span>
+        <div style="font-size:1.5rem;margin-bottom:1rem;">✨</div>
+        <h3>IA para Negocios</h3>
+        <p>Fundamentos de IA generativa, prompting, automatización básica.</p>
+        <div class="meta"><span>⏱ 20 horas</span><span>📶 Básico</span></div>
+        <div class="price">Consultar precio</div>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20el%20curso%20de%20IA%20para%20Negocios" target="_blank" class="btn-primary" style="width:100%;text-align:center;">Inscribirse</a>
       </div>
-      <div class="course r" style="transition-delay:.1s">
-        <div class="c-icon">📊</div>
-        <div class="c-level l2">Intermedio</div>
-        <h3 class="c-title">Power BI & Excel Avanzado</h3>
-        <p class="c-desc">Dashboards profesionales, DAX, modelado de datos y análisis empresarial avanzado con las herramientas líderes del mercado.</p>
-        <div class="c-meta"><span class="c-dur">⏱ 30h</span><span class="c-price">Consultar precio</span></div>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="c-btn">Inscribirse</a>
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:1rem;">✨</div>
+        <h3>Power BI &amp; Excel Avanzado</h3>
+        <p>Dashboards profesionales, DAX, análisis de datos empresariales.</p>
+        <div class="meta"><span>⏱ 20 horas</span><span>📶 Intermedio</span></div>
+        <div class="price">Consultar precio</div>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20el%20curso%20de%20Power%20BI%20y%20Excel" target="_blank" class="btn-primary" style="width:100%;text-align:center;">Inscribirse</a>
       </div>
-      <div class="course r" style="transition-delay:.2s">
-        <div class="c-icon">⚡</div>
-        <div class="c-level l3">Avanzado</div>
-        <h3 class="c-title">Automatización N8n & Make</h3>
-        <p class="c-desc">Flujos de trabajo automatizados desde cero, integración de APIs y herramientas para eliminar el trabajo repetitivo.</p>
-        <div class="c-meta"><span class="c-dur">⏱ 25h</span><span class="c-price">Consultar precio</span></div>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="c-btn">Inscribirse</a>
+      <div class="card">
+        <div style="font-size:1.5rem;margin-bottom:1rem;">✨</div>
+        <h3>Automatización con N8n &amp; Make</h3>
+        <p>Construye flujos de trabajo automatizados desde cero.</p>
+        <div class="meta"><span>⏱ 25 horas</span><span>📶 Avanzado</span></div>
+        <div class="price">Consultar precio</div>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20el%20curso%20de%20Automatizaci%C3%B3n%20N8n%20y%20Make" target="_blank" class="btn-primary" style="width:100%;text-align:center;">Inscribirse</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CEO -->
-<section id="ceo" class="section">
-  <div class="section-inner">
-    <div class="ceo-grid">
-      <div class="ceo-visual r">
-        <div class="ceo-avatar-circle">👤</div>
-        <div class="ceo-badge">
-          <div class="ceo-badge-name">Fernando Nuñez</div>
-          <div class="ceo-badge-role">CEO · METRIKA GROUP</div>
+<!-- ABOUT -->
+<section id="nosotros" class="about" style="background:var(--bg-dark);">
+  <div class="container">
+    <div class="grid">
+      <div class="photo">
+        <div style="text-align:center;">
+          <div class="avatar">FN</div>
+          <p style="color:var(--muted);font-size:0.875rem;">Fernando Nuñez</p>
         </div>
       </div>
-      <div class="ceo-info r" style="transition-delay:.2s">
-        <span class="label">Quién lidera METRIKA GROUP</span>
-        <h2 class="ceo-name">Fernando<br>Nuñez.</h2>
-        <p class="ceo-role-text">CEO & Consultor Senior en IA y Datos</p>
-        <p class="ceo-bio">Con amplia experiencia en transformación digital, Fernando lidera METRIKA GROUP con una visión clara: hacer que la inteligencia artificial sea accesible, práctica y rentable para las empresas latinoamericanas. Ha acompañado a decenas de organizaciones en su camino hacia la automatización y el uso estratégico de los datos.</p>
-        <div class="chips">
-          <span class="chip">IA Generativa</span>
-          <span class="chip">Power BI</span>
-          <span class="chip">N8n & Make</span>
-          <span class="chip">Automatización</span>
-          <span class="chip">Análisis de Datos</span>
+      <div>
+        <span class="section-label">Quién lidera METRIKA GROUP</span>
+        <h2>Fernando Nuñez</h2>
+        <p class="role">CEO &amp; Consultor Senior en IA y Datos</p>
+        <p class="bio">Con amplia experiencia en transformación digital, Fernando lidera METRIKA GROUP con una visión clara: hacer que la inteligencia artificial sea accesible, práctica y rentable para las empresas latinoamericanas. Su enfoque combina estrategia de negocio con implementación técnica de vanguardia.</p>
+        <div class="badges">
+          <span>IA Generativa</span>
+          <span>Power BI Expert</span>
+          <span>N8n &amp; Make</span>
+          <span>Automatización</span>
         </div>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="btn-contact">✉ <span class="__cf_email__" data-cfemail="ff929a8b8d9694d19d96bf98929e9693d19c9092">[email&#160;protected]</span></a>
+        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20quiero%20conectar%20contigo" target="_blank" class="cta-link">Conectar con Fernando →</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<section id="testi" class="section" style="background:var(--bg2)">
-  <div class="section-inner">
-    <div class="r">
-      <span class="label">Testimonios</span>
-      <h2 class="h2">Lo que dicen<br>nuestros <em>clientes.</em></h2>
-    </div>
-    <div class="testi-grid">
-      <div class="tcard r">
-        <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="tcard-quote">"METRIKA GROUP transformó completamente nuestros procesos. Logramos automatizar el 70% de las tareas repetitivas del equipo en solo 6 semanas. El ROI fue inmediato."</p>
-        <div class="tcard-author">
-          <div class="tcard-av" style="background:var(--grad)">CM</div>
-          <div><div class="tcard-name">Carlos Martínez</div><div class="tcard-co">Gerente de Operaciones · LogisTech</div></div>
+<section class="testimonials">
+  <div class="container" style="text-align:center;">
+    <span class="section-label">Testimonios</span>
+    <h2>Lo que dicen nuestros clientes</h2>
+    <div class="grid" style="text-align:left;">
+      <div class="card">
+        <div class="quote-icon">❝</div>
+        <p class="text">"METRIKA GROUP transformó completamente nuestros procesos internos. Automatizamos más de 40 flujos de trabajo y redujimos costos operativos en un 35%."</p>
+        <div class="stars">★★★★★</div>
+        <div class="author">
+          <div class="author-avatar">CM</div>
+          <div>
+            <div class="author-name">Carolina Méndez</div>
+            <div class="author-company">Directora de Operaciones, LogiTech Co.</div>
+          </div>
         </div>
       </div>
-      <div class="tcard r" style="transition-delay:.1s">
-        <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="tcard-quote">"La capacitación en Power BI fue un antes y un después para nuestro equipo. Ahora tomamos decisiones basadas en datos reales. Fernando es un excelente formador."</p>
-        <div class="tcard-author">
-          <div class="tcard-av" style="background:var(--grad2)">AP</div>
-          <div><div class="tcard-name">Ana Pérez</div><div class="tcard-co">Directora Financiera · Grupo Inversión</div></div>
+      <div class="card">
+        <div class="quote-icon">❝</div>
+        <p class="text">"La capacitación en Power BI fue excepcional. Ahora nuestro equipo toma decisiones basadas en datos reales, no en suposiciones."</p>
+        <div class="stars">★★★★★</div>
+        <div class="author">
+          <div class="author-avatar">AG</div>
+          <div>
+            <div class="author-name">Andrés Gutiérrez</div>
+            <div class="author-company">Gerente General, Nexo Digital</div>
+          </div>
         </div>
       </div>
-      <div class="tcard r" style="transition-delay:.2s">
-        <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="tcard-quote">"Implementamos un agente de IA para atención al cliente que maneja el 80% de las consultas automáticamente. Increíble el nivel de personalización y soporte."</p>
-        <div class="tcard-author">
-          <div class="tcard-av" style="background:linear-gradient(135deg,#7B61FF,#00C8FF)">LR</div>
-          <div><div class="tcard-name">Luis Rodríguez</div><div class="tcard-co">CEO · RetailMax Colombia</div></div>
+      <div class="card">
+        <div class="quote-icon">❝</div>
+        <p class="text">"Fernando y su equipo entienden perfectamente las necesidades del negocio. Su consultoría en IA nos posicionó como líderes en innovación en nuestro sector."</p>
+        <div class="stars">★★★★★</div>
+        <div class="author">
+          <div class="author-avatar">MR</div>
+          <div>
+            <div class="author-name">María José Restrepo</div>
+            <div class="author-company">CEO, InnovaLatam</div>
+          </div>
         </div>
       </div>
     </div>
@@ -761,88 +407,103 @@ footer {
 </section>
 
 <!-- CTA FINAL -->
-<section id="cta">
-  <div class="cta-glow"></div>
-  <div class="cta-inner">
-    <div class="r">
-      <span class="label" style="display:block;text-align:center;margin-bottom:24px">Empecemos</span>
-      <h2 class="cta-h2">¿Listo para transformar<br>tu empresa <em>con IA?</em></h2>
-      <p class="cta-p">Agenda una consulta gratuita de 30 minutos con Fernando y descubre exactamente cómo podemos ayudarte.</p>
-      <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="btn-a" style="font-size:16px;padding:16px 36px">Agendar consulta gratuita</a>
-      <p class="cta-note">Sin compromisos · 100% personalizado · <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="__cf_email__" data-cfemail="6d0008191f0406430f042d0a000c0401430e0200">[email&#160;protected]</a></p>
-    </div>
-  </div>
+<section id="contacto" class="cta-final">
+  <h2>¿Listo para transformar tu empresa con IA?</h2>
+  <p>Agenda una consulta gratuita de 30 minutos con Fernando y descubre cómo podemos ayudarte.</p>
+  <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20quiero%20agendar%20una%20consulta%20gratuita%20con%20METRIKA%20GROUP" target="_blank" class="btn-dark">Agendar consulta gratuita</a>
+  <p class="small">Sin compromisos. 100% personalizado.</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="ft-brand">
-        <div class="ft-logo">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-            <defs><linearGradient id="fmg" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#00C8FF"/><stop offset="1" stop-color="#7B61FF"/></linearGradient></defs>
-            <polyline points="3,22 3,6 14,17 25,6 25,22" stroke="url(#fmg)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-          <span class="ft-logo-text">METRIKA GROUP</span>
+  <div class="top-line"></div>
+  <div class="inner">
+    <div class="brand">
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <div style="width:2rem;height:2rem;background:var(--gradient);border-radius:0.5rem;display:flex;align-items:center;justify-content:center;font-family:'Sora';font-weight:700;font-size:0.85rem;color:var(--fg-dark);">M</div>
+        <div style="display:flex;flex-direction:column;line-height:1;">
+          <span style="font-family:'Sora';font-weight:700;font-size:0.85rem;letter-spacing:0.05em;">METRIKA</span>
+          <span style="font-family:'Sora';font-size:0.6rem;letter-spacing:0.3em;color:var(--muted);">GROUP</span>
         </div>
-        <p class="ft-tagline">Inteligencia que transforma negocios.</p>
-        <p class="ft-location">🇨🇴 Colombia</p>
       </div>
-      <div class="ft-col">
-        <h5>Servicios</h5>
-        <ul>
-          <li><a href="#services">Agentes de IA</a></li>
-          <li><a href="#services">Automatización N8n</a></li>
-          <li><a href="#services">Consultoría IA</a></li>
-          <li><a href="#services">Análisis de Datos</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h5>Formación</h5>
-        <ul>
-          <li><a href="#courses">IA para Negocios</a></li>
-          <li><a href="#courses">Power BI & Excel</a></li>
-          <li><a href="#courses">N8n & Make</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h5>Contacto</h5>
-        <a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="ft-email">✉ <span class="__cf_email__" data-cfemail="c7aaa2b3b5aeace9a5ae87a0aaa6aeabe9a4a8aa">[email&#160;protected]</span></a>
-        <p class="ft-person">Fernando Nuñez<br>CEO & Consultor Senior</p>
-      </div>
+      <p>Inteligencia que transforma negocios.</p>
+      <p style="margin-top:0.5rem;">Colombia 🇨🇴</p>
     </div>
-    <div class="footer-bottom">
-      <p class="ft-copy">© 2026 <strong>METRIKA GROUP</strong> · Todos los derechos reservados</p>
-      <p class="ft-mono">Inteligencia que transforma negocios.</p>
+    <div>
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="#servicios">Agentes de IA</a></li>
+        <li><a href="#servicios">Automatización</a></li>
+        <li><a href="#servicios">Consultoría en IA</a></li>
+        <li><a href="#servicios">Análisis de Datos</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Capacitaciones</h4>
+      <ul>
+        <li><a href="#capacitaciones">IA para Negocios</a></li>
+        <li><a href="#capacitaciones">Power BI &amp; Excel</a></li>
+        <li><a href="#capacitaciones">N8n &amp; Make</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <a href="https://wa.me/573008189809" target="_blank" class="contact-email">+57 300 818 9809</a>
+      <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--muted);">Fernando Nuñez<br>CEO &amp; Consultor Senior</p>
     </div>
   </div>
+  <div class="bottom">© 2026 METRIKA GROUP · Todos los derechos reservados</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// NAV scroll
-const nav = document.getElementById('nav');
-addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 30));
+<!-- FLOATING WHATSAPP BUTTON -->
+<a href="https://wa.me/573008189809?text=Hola%20Fernando%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20METRIKA%20GROUP" target="_blank" class="wa-float" title="Chatea por WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.4.638 4.65 1.754 6.594L2 30l7.604-1.72A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="white"/>
+    <path d="M22.8 19.6c-.33-.165-1.956-.965-2.259-1.075-.303-.11-.523-.165-.743.165-.22.33-.853 1.075-1.046 1.295-.193.22-.385.248-.715.083-.33-.165-1.394-.514-2.655-1.64-.981-.875-1.643-1.955-1.836-2.285-.193-.33-.02-.508.145-.672.149-.148.33-.385.495-.578.165-.193.22-.33.33-.55.11-.22.055-.413-.028-.578-.083-.165-.743-1.793-1.018-2.458-.268-.645-.54-.558-.743-.568-.193-.01-.413-.012-.633-.012s-.578.083-.88.413c-.303.33-1.153 1.126-1.153 2.745 0 1.619 1.181 3.183 1.346 3.403.165.22 2.318 3.54 5.617 4.963.785.34 1.397.542 1.874.694.787.25 1.504.215 2.07.13.632-.094 1.956-.8 2.233-1.572.275-.772.275-1.434.193-1.572-.082-.138-.303-.22-.633-.385z" fill="#25D366"/>
+  </svg>
+</a>
 
-// Particle canvas
-const cv = document.getElementById('hero-canvas');
-const cx = cv.getContext('2d');
-let W, H, pts = [];
-function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
-resize(); addEventListener('resize', resize);
-for (let i = 0; i < 55; i++) pts.push({
-  x: Math.random()*1000, y: Math.random()*800,
-  vx: (Math.random()-.5)*.35, vy: (Math.random()-.5)*.35,
-  c: Math.random() > .5 ? '#00C8FF' : '#7B61FF'
-});
-function frame() {
-  cx.clearRect(0,0,W,H);
-  pts.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if(p.x<0||p.x>W) p.vx*=-1;
-    if(p.y<0||p.y>H) p.vy*=-1;
-    cx.beginPath(); cx.arc(p.x,p.y,1.5,0,Math.PI*2);
-    cx.fillStyle = p.c; cx.globalAlpha=.35; cx.fill(); cx.globalAlpha=1;
-  });
-  for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++) {
-    const dx=pts[i].x-pts[j].x, dy=pts[i].
+<!-- PARTICLES -->
+<script>
+(function() {
+  var canvas = document.getElementById('particles');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  function init() {
+    resize();
+    var count = Math.min(Math.floor((canvas.width * canvas.height) / 15000), 80);
+    particles = [];
+    for (var i = 0; i < count; i++) {
+      particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4 });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(100,160,255,0.35)'; ctx.fill();
+      for (var j = i + 1; j < particles.length; j++) {
+        var p2 = particles[j];
+        var dx = p.x - p2.x, dy = p.y - p2.y, dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 150) {
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = 'rgba(100,160,255,' + (0.1 * (1 - dist/150)) + ')';
+          ctx.lineWidth = 0.5; ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  init(); draw();
+  window.addEventListener('resize', init);
+})();
+</script>
+
+</body>
+</html>
